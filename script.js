@@ -13,17 +13,17 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    const dropToken = (column, player, index ) => {
+    const placeToken = (row, column, player ) => {
 
-        if (index < 0 || index >= board.length) {
-            console.error(`Index ${index} is out of bounds.`);
+        if (row < 0 || row >= rows || column < 0 || column >= columns) {
+            console.error(`Position (${row}, ${column}) is out of bounds.`);
             return;
         }
     
-        const cell = board[index][column];
+        const cell = board[row][column];
     
         if (cell.getValue() !== 0) {
-            console.error(`Cell at index ${index}, column ${column} is already occupied.`);
+            console.error(`Cell at position (${row}, ${column}) is already occupied.`);
             return;
         }
     
@@ -35,7 +35,15 @@ function Gameboard() {
         console.log(boardWithCellValues);
     };
 
-    return { getBoard, dropToken, printBoard }; // DropToken //
+    const cleanBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                board[i][j].addToken(0);
+            }
+        }
+    }
+
+    return { getBoard, placeToken, printBoard, cleanBoard }; 
 
 }
 
@@ -65,13 +73,17 @@ function GameController(
     const players = [
         {
             name: playerOneName,
-            token: 1
+            token: 1,
+            score: 0
         },
         {
             name: playerTwoName,
-            token: 2
+            token: 2,
+            score: 0
         }
     ];
+
+    const getPlayers = () => players;
 
     let activePlayer = players[0];
 
@@ -94,13 +106,13 @@ function GameController(
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
-    const playRound = (column,  index ) => {
+    const playRound = (row, column ) => {
 
         console.log(
-          `Dropping ${getActivePlayer().name}'s token into column ${column}...`
+          `Placing ${getActivePlayer().name}'s token at position (${row}, ${column})`
         );
 
-        board.dropToken(column, getActivePlayer().token, index);
+        board.placeToken(row, column, getActivePlayer().token);
 
          for (var i in board.getBoard) {
             for (var j in board.getBoard[i]) {
@@ -110,10 +122,13 @@ function GameController(
     
         /*  This is where we would check for a winner and handle that logic,
             such as a win message. */
-         check_win();
-         check_draw();
-        switchPlayerTurn();
-        printNewRound();
+         if (check_win() || check_draw()) {
+            console.log("Game over!"); // So //
+            board.cleanBoard();
+        } else {
+            printNewRound();
+            switchPlayerTurn();
+        }
     };
 
     let boardd = board.getBoard();
@@ -142,6 +157,7 @@ function GameController(
                 boardd[rowA][colA].getValue() === boardd[rowB][colB].getValue() &&
                 boardd[rowA][colA].getValue() === boardd[rowC][colC].getValue()
             ) {
+                getActivePlayer().score++;
                 console.log(`${getActivePlayer().name} wins!`);
                 return true;
             }
@@ -162,12 +178,80 @@ function GameController(
     printNewRound();
 
     return {
+        getPlayers,
         playRound,
         getActivePlayer,
         changePlayersName,
-        // getBoard: board.getBoard
+         getBoard: board.getBoard
     };
 
 }
 
-const game = GameController();
+function ScreenController() {
+    const game = GameController();
+    const playerTurnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('.board');
+
+    const player_one = document.getElementById('first-player');
+    const player_two = document.getElementById('second-player');
+
+    const updateScreen = () => {
+
+        boardDiv.textContent = "";
+  
+        // get the newest version of the board and player turn
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        const displayPlayersInfo = () => {
+
+        const players = game.getPlayers();
+            if (players.length >= 1) {
+            player_one.textContent = players[0].name +': '+ players[0].score; 
+            }
+            if (players.length >= 2) {
+            player_two.textContent = players[1].name +': '+ players[1].score;
+         }
+        };
+
+        displayPlayersInfo();
+
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
+    
+        // Render board squares
+        board.forEach((row, rowIndex) => {
+          row.forEach((cell, colIndex) => {
+
+            const cellButton = document.createElement("button");
+            cellButton.classList.add("cell");
+
+            cellButton.dataset.row = rowIndex;
+            cellButton.dataset.column = colIndex;
+            cellButton.textContent = cell.getValue();
+            boardDiv.appendChild(cellButton);
+          })
+        })
+    }
+
+    function clickHandlerBoard(e) {
+        const selectedRow = e.target.dataset.row;
+        const selectedColumn = e.target.dataset.column;
+        // Asegúrate de haber hecho clic en una columna y no en los espacios entre ellas
+        if (selectedRow === undefined || selectedColumn === undefined) return;
+
+        const rowIndex = parseInt(selectedRow, 10);
+        const columnIndex = parseInt(selectedColumn, 10);
+        if (isNaN(rowIndex) || isNaN(columnIndex)) return;
+
+        game.playRound(rowIndex, columnIndex);
+        updateScreen();
+      }
+
+      boardDiv.addEventListener("click", clickHandlerBoard);
+      // Initial render
+      updateScreen();
+}
+
+ScreenController();
+
+
