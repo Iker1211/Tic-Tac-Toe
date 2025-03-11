@@ -40,18 +40,20 @@ body {
       width: 35vw;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
-       /* border: 1px solid black;  */
+      /* border: 1px solid black;   */
       gap: 2px;
-      background-color: transparent;
+      background-image: url(../assets/background/Designer.jpeg);
+      background-size: cover;
     }
     
     .cell {
+      color: red;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
       font-size: 2rem;
-       border: none; 
+       border: auto solid black; 
       background: transparent;
       cursor: pointer;
     }
