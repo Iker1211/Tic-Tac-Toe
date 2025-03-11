@@ -1,4 +1,13 @@
+@font-face {
+  font-family: 'Markazi Text';
+  src: url('../assets/font/markazitext/MarkaziText-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
+    font-family: 'Markazi Text', sans-serif;
     background-image: url(../assets/background/hassaan-here.jpg);
     background-size: cover;
     background-repeat: repeat;
