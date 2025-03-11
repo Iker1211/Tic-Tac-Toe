@@ -56,3 +56,14 @@ body {
       background: transparent;
       cursor: pointer;
     }
+
+@media screen and (max-width: 768px) {
+  
+  .logo-container, .board, .players-info {
+    width: 80vw;
+  }
+
+  .board {
+    height: 80vw;
+  }
+}
