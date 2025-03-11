@@ -40,10 +40,9 @@ body {
       width: 35vw;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      /* border: 1px solid black; */
-      gap: 2px solid black;
-      padding: 2px;
-      background-color: transparent;
+       /* border: 1px solid black;  */
+      gap: 2px;
+      background-color: black;
     }
     
     .cell {
@@ -52,7 +51,7 @@ body {
       align-items: center;
       text-align: center;
       font-size: 2rem;
-      /* border: 1px solid grey; */
+       border: none; 
       background: transparent;
       cursor: pointer;
     }
