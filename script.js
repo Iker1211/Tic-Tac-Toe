@@ -188,6 +188,37 @@ function GameController(
 }
 
 function ScreenController() {
+
+    const displayPlayersInfo = () => {
+        const players = game.getPlayers();
+            if (players.length >= 1) {
+            player_one.textContent = players[0].name +': '+ players[0].score; 
+            }
+            if (players.length >= 2) {
+            player_two.textContent = players[1].name +': '+ players[1].score;
+        }
+    };
+
+    const modal = document.addEventListener('DOMContentLoaded', () => {
+        
+        const closeButton = document.querySelector('[data-close-modal]');
+        const modal = document.querySelector('[data-modal]');
+        const form = document.querySelector('form');
+
+        modal.style.display = 'block';
+        modal.showModal();
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const playerOneName = formData.get('first-player');
+            const playerTwoName = formData.get('second-player');
+            game.changePlayersName(playerOneName, playerTwoName);
+            modal.close();
+            modal.style.display = 'none';
+        });
+    });
+
     const game = GameController();
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
@@ -198,23 +229,9 @@ function ScreenController() {
     const updateScreen = () => {
 
         boardDiv.textContent = "";
-  
         // get the newest version of the board and player turn
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
-
-        const displayPlayersInfo = () => {
-
-        const players = game.getPlayers();
-            if (players.length >= 1) {
-            player_one.textContent = players[0].name +': '+ players[0].score; 
-            }
-            if (players.length >= 2) {
-            player_two.textContent = players[1].name +': '+ players[1].score;
-         }
-        };
-
-        displayPlayersInfo();
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`
     
@@ -232,18 +249,15 @@ function ScreenController() {
             if (cellButton.textContent === "0") {
                 cellButton.textContent = "";
             }
-
             if (cellButton.textContent === "1") {
                 cellButton.textContent = "X";
             }
-
             if (cellButton.textContent === "2") {
                 cellButton.textContent = "O";
             }
-
             boardDiv.appendChild(cellButton);
           })
-        })
+        });
     }
 
     function clickHandlerBoard(e) {
@@ -262,6 +276,8 @@ function ScreenController() {
 
       boardDiv.addEventListener("click", clickHandlerBoard);
       // Initial render
+      modal;
+      displayPlayersInfo();
       updateScreen();
 }
 

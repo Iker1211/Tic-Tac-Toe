@@ -11,3 +11,5 @@
     - Style the rest of the project at your liking
 
 Open dialog with form. Then preventDefault? Then use ChangePlayersName function.
+
+Increase font-size 

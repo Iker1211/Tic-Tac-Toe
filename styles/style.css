@@ -6,15 +6,81 @@
   font-display: swap;
 }
 
+:root {
+  --violet: #40295e;
+  --blue: #13222e;
+  --white: #f5f5f5;
+  --black: #1a1a1a;
+  --gray: #5a5a5a;
+  --yellow: #e3c200;
+  --gold: gold;
+  --red: #f3464a;
+  --green: #12e193;
+  --line-height: 1.6;
+  --font-size-base: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
     font-family: 'Markazi Text', sans-serif;
     background-image: url(../assets/background/hassaan-here.jpg);
     background-size: cover;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     place-items: center;
   }
+
+  dialog::backdrop {
+    background-image: url(../assets/background/Designer3.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  dialog {
+    margin: auto auto;
+
+    & > form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      & > p {
+        display: flex;
+        flex-direction: column;
+      }
+
+      & label {
+        text-align: center;
+    }
+
+    & input:valid {
+        border: 3px solid green;
+    }
+
+    & input:focus:valid {
+        border: 3px solid green;
+        background-color: color-mix(in srgb, var(--green), transparent 80%);
+    }
+
+    &  input:focus-invalid {
+        border: 3px solid red;
+        background-color: color-mix(in srgb, var(--red), transparent 80%);
+    }
+    
+    & button {
+        width: 100%;
+        margin: auto;
+        padding: 5px;
+        border: 3px solid var(--black);
+        background: var(--yellow);
+        cursor: pointer;
+    }
+    }
+  } 
 
    #bg-credits {
     font-size: 0.7em;
@@ -64,7 +130,7 @@ body {
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-size: 2rem;
+      font-size: 4rem;
        border: auto solid black; 
       background: transparent;
       cursor: pointer;

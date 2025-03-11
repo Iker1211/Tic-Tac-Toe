@@ -10,6 +10,20 @@
 </head>
 <body>
     <p id="bg-credits">By <a href="https://unsplash.com/es/@hassaanhre" rel="noreferrer" target="_blank">Hassaan-Here</a> in  <a href="https://unsplash.com/es" rel="noreferrer" target="_blank">Unsplash</a></p>
+    <dialog data-modal>
+        <h1>TOP Chicken Tracker</h1>
+        <form action="" method="dialog">
+            <p>
+                <label for="first-player">First Player</label>
+                <input type="text" id="first-player" name="first-player" required pattern="^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s.'\-]{0,98}[A-Za-zÀ-ÿ]$">
+            </p>
+            <p>
+                <label for="second-player">Second Player</label>
+                <input type="text" id="second-player" name="second-player" required pattern="^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s.'\-]{0,98}[A-Za-zÀ-ÿ]$">
+            </p>
+            <button data-close-modal type="submit">Start</button>
+        </form>
+    </dialog>
     <div class="logo-container">
         <img src="assets/logo/wordmark.svg" rel="wordmark" >
     </div>
