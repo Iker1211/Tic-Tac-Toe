@@ -10,8 +10,4 @@
     - Style each cell better 
     - Style the rest of the project at your liking
 
-document.addEventListener('DOMContentLoaded', e => {
-    const input_names = document.createElement('form');
-    input_names.textContent = 'Enter player names Loremmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm';
-    document.appendChild(input_names);
-  });  
+Open dialog with form. Then preventDefault? Then use ChangePlayersName function.

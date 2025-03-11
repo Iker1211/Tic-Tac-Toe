@@ -16,6 +16,18 @@ body {
     place-items: center;
   }
 
+   #bg-credits {
+    font-size: 0.7em;
+    position: absolute;
+    top: 1rem;
+    right: 90%;
+
+    & > a {
+        display: inline-block;
+        color: var(--violet);
+    }
+}
+
 .logo-container {
   width: 50vw;
   padding: 1rem;
