@@ -42,7 +42,7 @@ body {
       grid-template-rows: repeat(3, 1fr);
        /* border: 1px solid black;  */
       gap: 2px;
-      background-color: black;
+      background-color: transparent;
     }
     
     .cell {

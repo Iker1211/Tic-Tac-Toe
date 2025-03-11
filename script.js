@@ -228,6 +228,19 @@ function ScreenController() {
             cellButton.dataset.row = rowIndex;
             cellButton.dataset.column = colIndex;
             cellButton.textContent = cell.getValue();
+
+            if (cellButton.textContent === "0") {
+                cellButton.textContent = "";
+            }
+
+            if (cellButton.textContent === "1") {
+                cellButton.textContent = "X";
+            }
+
+            if (cellButton.textContent === "2") {
+                cellButton.textContent = "O";
+            }
+
             boardDiv.appendChild(cellButton);
           })
         })
