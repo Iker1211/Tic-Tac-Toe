@@ -28,7 +28,7 @@ body {
     font-family: 'Markazi Text', sans-serif;
     background-image: url(../assets/background/hassaan-here.jpg);
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     display: flex;
     flex-direction: column;
     place-items: center;

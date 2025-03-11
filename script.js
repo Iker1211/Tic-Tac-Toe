@@ -189,42 +189,12 @@ function GameController(
 
 function ScreenController() {
 
-    const displayPlayersInfo = () => {
-        const players = game.getPlayers();
-            if (players.length >= 1) {
-            player_one.textContent = players[0].name +': '+ players[0].score; 
-            }
-            if (players.length >= 2) {
-            player_two.textContent = players[1].name +': '+ players[1].score;
-        }
-    };
-
-    const modal = document.addEventListener('DOMContentLoaded', () => {
-        
-        const closeButton = document.querySelector('[data-close-modal]');
-        const modal = document.querySelector('[data-modal]');
-        const form = document.querySelector('form');
-
-        modal.style.display = 'block';
-        modal.showModal();
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const playerOneName = formData.get('first-player');
-            const playerTwoName = formData.get('second-player');
-            game.changePlayersName(playerOneName, playerTwoName);
-            modal.close();
-            modal.style.display = 'none';
-        });
-    });
-
     const game = GameController();
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
 
-    const player_one = document.getElementById('first-player');
-    const player_two = document.getElementById('second-player');
+    const player_one = document.getElementById('display-first-player');
+    const player_two = document.getElementById('display-second-player');
 
     const updateScreen = () => {
 
@@ -260,6 +230,17 @@ function ScreenController() {
         });
     }
 
+    const displayPlayersInfo = (playerOneName, playerTwoName) => {
+        const players = game.getPlayers();
+
+            if (players.length >= 1) {
+            player_one.textContent = playerOneName +': '+ players[0].score; 
+            }
+            if (players.length >= 2) {
+            player_two.textContent = playerTwoName +': '+ players[1].score;
+        }
+    };
+
     function clickHandlerBoard(e) {
         const selectedRow = e.target.dataset.row;
         const selectedColumn = e.target.dataset.column;
@@ -274,10 +255,31 @@ function ScreenController() {
         updateScreen();
       }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        const closeButton = document.querySelector('[data-close-modal]');
+        const modal = document.querySelector('[data-modal]');
+        const form = document.querySelector('form');
+
+        modal.style.display = 'block';
+        modal.showModal();
+
+        form.addEventListener('submit', (e) => {
+            const formData = new FormData(form);
+            const playerOneName = formData.get('first-player');
+            const playerTwoName = formData.get('second-player');
+
+            e.preventDefault();
+            game.changePlayersName(playerOneName, playerTwoName);
+            modal.close();
+            modal.style.display = 'none';
+            displayPlayersInfo(playerOneName, playerTwoName);
+            updateScreen();
+        });
+    });
+
       boardDiv.addEventListener("click", clickHandlerBoard);
       // Initial render
-      modal;
-      displayPlayersInfo();
       updateScreen();
 }
 
