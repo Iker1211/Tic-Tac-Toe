@@ -230,14 +230,14 @@ function ScreenController() {
         });
     }
 
-    const displayPlayersInfo = (playerOneName, playerTwoName) => {
+    const displayPlayersInfo = () => {
         const players = game.getPlayers();
 
             if (players.length >= 1) {
-            player_one.textContent = playerOneName +': '+ players[0].score; 
+            player_one.textContent = players[0].name +': '+ players[0].score; 
             }
             if (players.length >= 2) {
-            player_two.textContent = playerTwoName +': '+ players[1].score;
+            player_two.textContent = players[1].name +': '+ players[1].score;
         }
     };
 
@@ -253,6 +253,7 @@ function ScreenController() {
 
         game.playRound(rowIndex, columnIndex);
         updateScreen();
+        displayPlayersInfo();
       }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -273,7 +274,7 @@ function ScreenController() {
             game.changePlayersName(playerOneName, playerTwoName);
             modal.close();
             modal.style.display = 'none';
-            displayPlayersInfo(playerOneName, playerTwoName);
+            displayPlayersInfo();
             updateScreen();
         });
     });
@@ -281,8 +282,7 @@ function ScreenController() {
       boardDiv.addEventListener("click", clickHandlerBoard);
       // Initial render
       updateScreen();
+      displayPlayersInfo();
 }
 
 ScreenController();
-
-
